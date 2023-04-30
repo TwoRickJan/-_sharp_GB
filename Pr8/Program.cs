@@ -162,36 +162,56 @@ int ArrayMinSumVecIndex(int[,] a){
 18 20
 15 18
 */
-Console.WriteLine("\n***Задача 54***\n");
+Console.WriteLine("\n***Задача 58***\n");
+//Инициализировать две матрицы. Посчитать произведение двух матриц
+int m58 = 2;
+int n58 = 2;
+int[,] A58_1 = Generate2DIntArray(m58,n58);
+int[,] A58_2 = Generate2DIntArray(m58,n58);
+Console.WriteLine("Матрица A:");
+Print2DIntArray(A58_1);
+Console.WriteLine("Матрица B:");
+Print2DIntArray(A58_2);
+Console.WriteLine("Матрица A*B=C:");
+Print2DIntArray(Multiplication(A58_1,A58_2));
 
 
-/*int[] PrintList(int[] list){
+int[,] Multiplication(int[,] a, int[,] b){
+    int[,] r = new int[a.GetLength(0), b.GetLength(1)];
+    if (a.GetLength(1) == b.GetLength(0)){
+    //int[,] r = new int[a.GetLength(0), b.GetLength(1)];
+    
+    for (int i = 0; i < a.GetLength(0); i++){
+        for (int j = 0; j < b.GetLength(1); j++){
+            for (int k = 0; k < b.GetLength(0); k++){
+                        
+                        r[i,j] += a[i,k] * b[k,j];
+                    
+                    }
+                }
+            }
+            return r;
+        }else{
+            Console.WriteLine("Ошибка размерности матриц");
+            return r;
+        }
+    
+    }
 
-}*/
+/*Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу, 
+которая будет построчно выводить массив, добавляя индексы каждого элемента.
+Массив размером 2 x 2 x 2
+66(0,0,0) 25(0,1,0)
+34(1,0,0) 41(1,1,0)
+27(0,0,1) 90(0,1,1)
+26(1,0,1) 55(1,1,1)*/
 
-/*// Сгенерировать случайны вещественнй двумерный массив m*n
-Console.WriteLine("\n***Задача 47***\n");
-
-double[,] array = Generate2DArray(3, 4);
-PrintDoubleArray(array);
-
-void PrintDoubleArray(double[,] array)
+Console.WriteLine("\n***Задача 60***\n");
+int[,,] a60 = Generate3DIntArray(2, 2, 2);
+Print3DIntArray(a60);
+int[,,] Generate3DIntArray(int m, int n, int s)
 {
-	for (int i = 0; i < array.GetLength(0); i++)
-	{
-		for(int j = 0; j < array.GetLength(1); j++)
-		{
-			Console.Write(array[i, j]);
-			Console.Write(" ");
-		}
-		Console.WriteLine();
-	}
-}
-
-
-double[,] Generate2DArray(int m, int n)
-{
-	double[,] array = new double[m, n];
+	int[,,] array = new int[m, n, s];
 	
 	Random random = new Random();
 
@@ -199,37 +219,33 @@ double[,] Generate2DArray(int m, int n)
 	{
 		for(int j = 0; j < n; j++)
 		{
-			array[i, j] = Math.Round(random.NextDouble(),1);
+            for(int k = 0; k < s; k++)
+            {
+                array[i, j, k] = random.Next(-9,10);
+            }
 		}
 	}
-
 	return array;
 }
 
-//Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и 
-//возвращает значение этого элемента или же указание, что такого элемента нет.
-/*Например, задан массив:
-1 4 7 2
-5 9 2 3
-8 4 2 4
-1, 7 -> такого числа в массиве нет*/
-/*
-Console.WriteLine("\n***Задача 50***\n");
-int m = 5;
-int n = 5;
-int[,] array2 = Generate2DIntArray(m, n);
-int i = Convert.ToInt32(Console.ReadLine());
-int j = Convert.ToInt32(Console.ReadLine());
-
-if (IsPosApearIn2DArray(array2,i,j)){
-    Console.WriteLine("Такой позиции нет");
-}else{
-    Console.WriteLine($"Значение элемента с позицией {i},{j} = {array2[i, j]}");
+void Print3DIntArray(int[,,] array)
+{
+    for (int k = 0; k < array.GetLength(2); k++)
+	{
+		for(int i = 0; i < array.GetLength(0); i++)
+		{
+            for(int j = 0; j < array.GetLength(1); j++)
+            {
+                Console.Write($"{array[i, j, k]}({i},{j},{k})");
+			    Console.Write(" ");
+                
+            }
+            Console.WriteLine();
+		}
+	}
 }
-
-PrintIntArray(array2);
-
-void PrintIntArray(int[,] array)
+/*
+void Print2DIntArray(int[,] array)
 {
 	for (int i = 0; i < array.GetLength(0); i++)
 	{
@@ -241,50 +257,50 @@ void PrintIntArray(int[,] array)
 		Console.WriteLine();
 	}
 }*/
-/*
-bool IsPosApearIn2DArray(int[,] array, int i, int j){
-	if(i<m && j<n){
-		return false;
-	}else{
-		return true;
+
+/*Задача 62. Напишите программу, которая заполнит спирально массив 4 на 4.
+Например, на выходе получается вот такой массив:
+01 02 03 04
+12 13 14 05
+11 16 15 06
+10 09 08 07*/
+
+Console.WriteLine("\n***Задача 62***\n");
+
+    int n60 = 4;
+    int[,] sqareMatrix = new int[n60, n60];
+
+    int temp60 = 1;
+    int i60 = 0;
+    int j60 = 0;
+
+    while (temp60 <= sqareMatrix.GetLength(0) * sqareMatrix.GetLength(1))
+    {
+    sqareMatrix[i60, j60] = temp60;
+    temp60++;
+    if (i60 <= j60 + 1 && i60 + j60 < sqareMatrix.GetLength(1) - 1)
+        j60++;
+    else if (i60 < j60 && i60 + j60 >= sqareMatrix.GetLength(0) - 1)
+        i60++;
+    else if (i60 >= j60 && i60 + j60 > sqareMatrix.GetLength(1) - 1)
+        j60--;
+    else
+        i60--;
     }
-}
 
-//Задача 52. Задайте двумерный массив из целых чисел. Найдите 
-//среднее арифметическое элементов в каждом столбце.
-/* Например, задан массив:
-1 4 7 2
-5 9 2 3
-8 4 2 4
-Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
-*/
-/*
-Console.WriteLine("\n***Задача 52***\n");
-// Задать int матриц. Найти ср. арифм. каждого столбика.
-int m2 = 3;
-int n2 = 1;
-int[,] array3 = Generate2DIntArray(m2, n2);
-double[] mean_line = GetMeanForEveryArrayColumn(array3);
-PrintIntArray(array3);
-PrintDoubleMassive(mean_line);
+    WriteArray(sqareMatrix);
 
-void PrintDoubleMassive(double[] massive)
-{
-     Console.WriteLine($"[{string.Join(", ", massive)}]");
-}
+    void WriteArray (int[,] array)
+    {
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+        if (array[i,j] / 10 <= 0)
+        Console.Write($" {array[i,j]} ");
 
-double[] GetMeanForEveryArrayColumn(int[,] array){
-	double[] mean_line = new double[array.GetLength(1)];
-	double sum;
-	for (int j = 0; j < array.GetLength(1); j++)
-	{
-		sum = 0;
-		for(int i = 0; i < array.GetLength(0); i++)
-		{
-			sum+=Convert.ToDouble(array[i,j]) ;
-		}
-		mean_line[j] = sum/array.GetLength(0);
-	}
-    return mean_line;
-}
-*/
+        else Console.Write($"{array[i,j]} ");
+        }
+        Console.WriteLine();
+    }
+    }
