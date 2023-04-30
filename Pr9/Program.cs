@@ -1,90 +1,74 @@
-﻿/*
-Задача 25: Напишите цикл, который принимает на вход два числа
-(A и B) и возводит число A в натуральную степень B.
-
-3, 5 -> 243 (3⁵)
-2, 4 -> 16
+﻿/*Задача 64: Задайте значение N. Напишите программу, которая выведет все
+натуральные числа в промежутке от N до 1. Выполнить с помощью рекурсии.
+N = 5 -> "5, 4, 3, 2, 1"
+N = 8 -> "8, 7, 6, 5, 4, 3, 2, 1"
 */
+Console.WriteLine("\n***Задача 64***\n");
+Console.WriteLine("Введите натуральное число больше 1:");
+int number = int.Parse(Console.ReadLine());
 
-int MyPow(int A,int B)
+///Метод вывода натуральных чисел от N до 1:
+void NumberCounter (int number)
 {
-    int s = 1;
-    switch (B)
-    {
-    case 0:
-        s = 0;
-        return s;
-    case 1:
-        s = 1;
-        return s;
-    default:
-    {
-        for (int i = 1; i <= B; i++)
-        {
-            s *= A;
-        }    
-        return s;
-    }
-    }
+    if (number < 0) Console.Write($"{number} не натуральное число");
+    if (number == 0) return;
+    Console.Write("{0,4}", number);
+    NumberCounter (number - 1);
 }
 
-int A = Convert.ToInt32(Console.ReadLine());
+NumberCounter(number);
 
-int B = Convert.ToInt32(Console.ReadLine());
+/*Задача 66: Задайте значения M и N. Напишите программу, которая найдёт сумму
+натуральных элементов в промежутке от M до N. Выполнить с помощью рекурсии.
+M = 1; N = 15 -> 120
+M = 4; N = 8. -> 30
+*/
+Console.WriteLine("\n***Задача 66***\n");
+Console.WriteLine("Введите начальное число M:");
+int numberM = int.Parse(Console.ReadLine());
 
-//int pow = MyPow(A, B);
+Console.WriteLine("Введите начальное число M:");
+int numberN = int.Parse(Console.ReadLine());
 
-Console.Write($"{A}, {B} ->", A, B);
-Console.WriteLine(MyPow(A, B));
+///Метод нахождения суммы натуральных элементов в промежутке от M до N
+void GapNumberSum (int numberM, int numberN, int sum)
+{
+    if (numberM > numberN) 
+    {
+        Console.WriteLine($"Сумма натуральных элементов в промежутке от M до N: {sum}"); 
+        return;
+    }
+    sum = sum + (numberM++);
+    GapNumberSum(numberM, numberN, sum);
+}
+
+GapNumberSum(numberM, numberN, 0);
 
 /*
-Задача 27: Напишите программу, которая принимает на вход число
-и выдаёт сумму цифр в числе.
-
-452 -> 11
-82 -> 10
-9012 -> 12
+Задача 68: Напишите программу вычисления функции Аккермана с помощью
+рекурсии. Даны два неотрицательных числа m и n.
+m = 3, n = 2 -> A(m,n) = 29
 */
 
-int num27 = Convert.ToInt32(Console.ReadLine());
-int SumDigits(int num)
+Console.WriteLine("\n***Задача 68***\n");
+
+int m = InputNumbers("Введите m: ");
+int n = InputNumbers("Введите n: ");
+
+int functionAkkerman = Ack(m, n);
+
+Console.Write($"Функция Аккермана = {functionAkkerman} ");
+
+int Ack(int m, int n)
 {
-    int s = 0;
-    while(num!=0)
-    {
-        s += num % 10;
-        num /= 10;
-    }
-    return s;
+  if (m == 0) return n + 1;
+  else if (n == 0) return Ack(m - 1, 1);
+  else return Ack(m - 1, Ack(m, n - 1));
 }
-Console.Write($"{num27} -> ", num27);
-Console.WriteLine(SumDigits(num27));
 
-/*
-Задача 29: Напишите программу, которая задаёт массив из 8 
-элементов и выводит их на экран.
-
-1, 2, 5, 7, 19 -> [1, 2, 5, 7, 19]
-6, 1, 33 -> [6, 1, 33]
-*/
-
-int[] a = new int[8];
-for (int i = 0; i < 8; i++)
+int InputNumbers(string input) 
 {
-    a[i] = Convert.ToInt32(Console.ReadLine());
-
-}
-Console.Write("{");
-for (int i = 0; i < 8; i++)
-{
-    if(i != 7)
-    {
-        Console.Write($"{a[i]}, ",a[i]);
-        
-    }
-    else
-    {
-        Console.Write($"{a[i]}",a[i]);
-        Console.WriteLine("}");
-    }
+  Console.Write(input);
+  int output = Convert.ToInt32(Console.ReadLine());
+  return output;
 }
